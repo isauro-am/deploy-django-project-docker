@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  database_service:
+    image: mariadb
+    # restart: always  # recomended only for production
+    container_name: ${DATABASE_CONTAINER_NAME}
+    hostname: ${DATABASE_HOST}
+    networks:
+      proyect_network:
+        ipv4_address: ${DATABASE_IP}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "127.0.0.1:33061:3306"
+
+  web_panel_service:
+    depends_on:
+      - database_service
+    build:
+      dockerfile: DockerfilePanel
+      context: .
+    environment:
+      DEBUG: ${DEBUG}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_NAME: ${DATABASE_NAME}
+      LOCAL_HOST_URL: ${LOCAL_HOST_URL}
+      # PUBLIC_HOST_URL: ${PUBLIC_HOST_URL}
+    
+    # restart: always  # recomended only for production
+    command: bash -c "python manage.py runserver 0.0.0.0:8000 --settings=${PROJECT_NAME}.settings.develop"
+    working_dir: /home/${PROJECT_NAME}/${PROJECT_NAME}
+    stdin_open: true
+    privileged: true
+    tty: true
+    ports:
+      - "8000:8000"
+    container_name: ${WEB_PANEL_CONTAINER_NAME}
+    hostname: ${WEB_PANEL_HOSTNAME}
+    networks:
+      proyect_network:
+        ipv4_address: ${WEB_PANEL_IP}
+    volumes:
+      - ../:/home/${PROJECT_NAME}
+
+networks:
+  proyect_network:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: ${SUB_NETWORK}
+
+# If you have multiple deployments that share this logic, you may need to modify the network name, in this case " proyect_network " 
+# In all the places that are called within this file.

@@ -1,0 +1,7 @@
+-r base.txt
+
+coverage==5.1
+coverage-badge==1.0.1
+django-debug-toolbar==2.2
+flake8==3.8.2
+django-slowtests==1.1.1

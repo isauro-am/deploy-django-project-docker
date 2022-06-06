@@ -1,4 +1,4 @@
-# deploy-django-project-docker
+# lldeploy-django-project-docker
 
 To deploy a django project in a docker container exposing the django project folders to be able to edit the project in real time.
 
@@ -14,7 +14,7 @@ sudo apt install python3-django
 django-admin startproject my-project
 ```
 
-### Once our project is created we will have something similar to the following
+### Once our project is created we will have something similar to the next
 
 ```
 docker/
@@ -60,7 +60,7 @@ Now before we can run our containers, we need to make a change inside our django
 
 Following our example we will have to navigate to **my-project/my-project/** inside we will create a folder called **settings** , and the **settings.py** file we will move inside the new folder and we will name it as **base.py**
 
-Now inside this folder **settings** we are going to create a new file called **develop.py** inside this file we will put the following content
+Now inside this folder **settings** we are going to create a new file called **develop.py** inside this file we will put the next content
 
 ```python
 from .base import *

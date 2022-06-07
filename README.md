@@ -36,7 +36,7 @@ It is very important to define the variable **PROJECT_NAME** as we named our pro
 # docker/.env
 
 DATABASE_CONTAINER_NAME=database_container
-DATABASE_HOST=my_database_hot_name
+DATABASE_HOST=my_database_host_name
 
 DATABASE_ROOT_PASSWORD=Secur3PasswDdRoo7
 DATABASE_NAME=databaseName

@@ -1,4 +1,4 @@
-# lldeploy-django-project-docker
+# Deploy-django-project-docker
 
 To deploy a django project in a docker container exposing the django project folders to be able to edit the project in real time.
 

@@ -14,12 +14,17 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USER}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 5s
+            retries: 10
     ports:
       - "127.0.0.1:33061:3306"
 
   web_panel_service:
     depends_on:
-      - database_service
+      database_service:
+        condition: service_healthy
     build:
       dockerfile: DockerfilePanel
       context: .
